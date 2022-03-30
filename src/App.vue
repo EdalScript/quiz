@@ -1,31 +1,119 @@
 <template>
-  <div class="ctr">
-    <div class="questions-ctr">
-      <div class="progress">
-        <div class="bar"></div>
-        <div class="status">1 out of 3 questions answered</div>
-      </div>
-      <div class="single-question">
-        <div class="question">Sample Question 1</div>
-        <div class="answers">
-          <div class="answer">Sample Answer 1</div>
-          <div class="answer">Sample Answer 2</div>
-          <div class="answer">Sample Answer 3</div>
-          <div class="answer">Sample Answer 4</div>
-        </div>
-      </div>
-    </div>
-    <div class="result">
-      <div class="title">You got sample result 1!</div>
-      <div class="desc">Enter a short description here about the result.</div>
-    </div>
+  <div class="container">
+    <Questions
+      v-if="questionsAnswered < questions.length"
+      :questions="questions"
+      :questionsAnswered="questionsAnswered"
+      @question-answered="questionAnswered"
+    />
+    <Result v-else />
     <button type="button" class="reset-btn">Reset</button>
   </div>
 </template>
 
 <script>
+import Questions from "./components/Questions.vue";
+import Result from "./components/Result.vue";
+
 export default {
   name: "App",
+  components: {
+    Questions,
+    Result,
+  },
+  data() {
+    return {
+      questionsAnswered: 0,
+      totalCorrect: 0,
+      questions: [
+        {
+          q: "Sample question",
+          answers: [
+            {
+              text: "1",
+              is_correct: true,
+            },
+            {
+              text: "11",
+              is_correct: false,
+            },
+            {
+              text: "111",
+              is_correct: false,
+            },
+            {
+              text: "1111",
+              is_correct: false,
+            },
+          ],
+        },
+        {
+          q: 'Sample question 2',
+          answers: [
+            {
+              text: "1",
+              is_correct: false,
+            },
+            {
+              text: "11",
+              is_correct: false,
+            },
+            {
+              text: "111",
+              is_correct: true,
+            },
+            {
+              text: "1111",
+              is_correct: false,
+            },
+          ],
+        },
+        {
+          q: "Sample question 3",
+          answers: [
+            {
+              text: "1",
+              is_correct: false,
+            },
+            {
+              text: "11",
+              is_correct: true,
+            },
+            {
+              text: "111",
+              is_correct: false,
+            },
+          ],
+        },
+      ],
+      results: [
+        {
+          min: 0,
+          max: 2,
+          title: "Try again!",
+          desc: "Do a little more studying and you may succeed!",
+        },
+        {
+          min: 3,
+          max: 3,
+          title: "Wow, you're a genius!",
+          desc: "Studying has definitely paid off for you!",
+        },
+      ],
+    };
+  },
+  methods: {
+    questionAnswered(is_correct) {
+      if (is_correct) {
+        this.totalCorrect++;
+      }
+      this.questionsAnswered++;
+    },
+    reset() {
+      this.questionsAnswered = 0;
+      this.totalCorrect = 0;
+    },
+  },
 };
 </script>
 
