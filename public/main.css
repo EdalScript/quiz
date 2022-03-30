@@ -8,14 +8,14 @@
     background: #e6ecf1;
   }
   
-  .ctr {
+  .container {
     margin: 0 auto;
     max-width: 600px;
     width: 100%;
     box-sizing: border-box;
     position: relative;
   }
-  .questions-ctr {
+  .questions-container {
     position: relative;
     width: 100%;
   }
